@@ -9,7 +9,7 @@ export class Todo extends BaseModel {
   @Field()
   todoItem: string;
 
-  @Field(() => StatusEnum)
+  @Field(() => StatusEnum, { nullable: true })
   status: StatusEnum;
 
   @Field(() => User)

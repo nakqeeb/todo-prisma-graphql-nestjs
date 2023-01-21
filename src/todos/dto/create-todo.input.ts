@@ -1,7 +1,15 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
+import { IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
+import { StatusEnum } from 'src/common/types/status.enum';
 
 @InputType()
 export class CreateTodoInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field()
+  @IsNotEmpty()
+  todoItem: string;
+
+  @Field(() => StatusEnum, { nullable: true }) // { nullable: true } important to make it optional
+  @IsOptional()
+  @IsEnum(StatusEnum)
+  status: StatusEnum;
 }

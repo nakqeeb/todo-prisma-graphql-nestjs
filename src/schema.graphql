@@ -11,14 +11,14 @@ type Auth {
   user: User!
 }
 
-input CreateTodoInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input ChangePasswordInput {
+  newPassword: String!
+  oldPassword: String!
 }
 
-input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+input CreateTodoInput {
+  status: StatusEnum
+  todoItem: String!
 }
 
 """
@@ -43,22 +43,20 @@ input LoginInput {
 }
 
 type Mutation {
+  changePassword(data: ChangePasswordInput!): User!
   createTodo(createTodoInput: CreateTodoInput!): Todo!
-  createUser(createUserInput: CreateUserInput!): User!
   login(data: LoginInput!): Auth!
   refreshToken(token: JWT!): Token!
-  removeTodo(id: Int!): Todo!
-  removeUser(id: Int!): User!
+  removeTodo(todoId: Int!): Todo!
   signup(data: SignupInput!): Auth!
-  updateTodo(updateTodoInput: UpdateTodoInput!): Todo!
-  updateUser(updateUserInput: UpdateUserInput!): User!
+  updateStatus(todoId: Int!, updateStatusDto: UpdateStatusDto!): Todo!
+  updateUser(data: UpdateUserInput!): User!
 }
 
 type Query {
+  me: User!
   todo(id: Int!): Todo!
   todos: [Todo!]!
-  user(id: Int!): User!
-  users: [User!]!
 }
 
 input SignupInput {
@@ -84,7 +82,7 @@ type Todo {
   """Identifies the date and time when the object was created."""
   createdAt: DateTime!
   id: ID!
-  status: StatusEnum!
+  status: StatusEnum
   todoItem: String!
 
   """Identifies the date and time when the object was last updated."""
@@ -101,16 +99,12 @@ type Token {
   refreshToken: JWT!
 }
 
-input UpdateTodoInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input UpdateStatusDto {
+  status: StatusEnum!
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  username: String!
 }
 
 type User {
