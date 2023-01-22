@@ -1,12 +1,20 @@
 import { UpdateStatusDto } from './dto/update-status.dto';
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { TodosService } from './todos.service';
 import { Todo } from './models/todo.model';
 import { CreateTodoInput } from './dto/create-todo.input';
 import { UseGuards } from '@nestjs/common';
-import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
-import { User } from '@prisma/client';
+import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
+import { User } from 'src/users/models/user.model';
 
 @Resolver(() => Todo)
 @UseGuards(GqlAuthGuard)
@@ -46,5 +54,10 @@ export class TodosResolver {
     @Args('todoId', { type: () => Int }) id: number,
   ) {
     return this.todosService.remove(id, user.id);
+  }
+
+  @ResolveField('theUser', () => User)
+  async theUser(@Parent() todo: Todo) {
+    return this.todosService.theUser(todo);
   }
 }

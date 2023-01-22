@@ -1,3 +1,4 @@
+import { Todo } from './models/todo.model';
 import {
   Injectable,
   NotFoundException,
@@ -78,5 +79,9 @@ export class TodosService {
       throw new UnauthorizedException('Unauthorized to delete this ToDo');
     }
     return this.prisma.todo.delete({ where: { id: todoId } });
+  }
+
+  async theUser(todo: Todo) {
+    return this.prisma.todo.findUnique({ where: { id: +todo.id } }).user();
   }
 }

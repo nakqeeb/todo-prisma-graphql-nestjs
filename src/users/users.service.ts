@@ -11,7 +11,7 @@ export class UsersService {
     private passwordService: PasswordService,
   ) {}
 
-  updateUser(userId: string, newUserData: UpdateUserInput) {
+  updateUser(userId: number, newUserData: UpdateUserInput) {
     return this.prisma.user.update({
       data: newUserData,
       where: {
@@ -21,7 +21,7 @@ export class UsersService {
   }
 
   async changePassword(
-    userId: string,
+    userId: number,
     userPassword: string,
     changePassword: ChangePasswordInput,
   ) {

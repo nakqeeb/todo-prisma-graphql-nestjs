@@ -8,7 +8,7 @@ import {
   ResolveField,
 } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
-import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
+import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { UsersService } from './users.service';
 import { User } from './models/user.model';
 import { ChangePasswordInput } from './dto/change-password.input';
@@ -51,7 +51,7 @@ export class UsersResolver {
   }
 
   @ResolveField('todos')
-  todos(@Parent() author: User) {
-    return this.prisma.user.findUnique({ where: { id: +author.id } }).todo();
+  todos(@Parent() user: User) {
+    return this.prisma.user.findUnique({ where: { id: user.id } }).todo();
   }
 }

@@ -2,13 +2,13 @@ import { PrismaModule } from './../prisma/prisma.module';
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
-import { JwtStrategy } from './jwt.strategy';
+import { JwtStrategy } from './strategy/jwt.strategy';
 import { PasswordService } from './password.service';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { SecurityConfig } from 'src/common/configs/config.interface';
-import { GqlAuthGuard } from './gql-auth.guard';
+import { GqlAuthGuard } from './guards/gql-auth.guard';
 
 @Module({
   imports: [
