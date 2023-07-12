@@ -11,11 +11,13 @@ import {
 import { TodosService } from './todos.service';
 import { Todo } from './models/todo.model';
 import { CreateTodoInput } from './dto/create-todo.input';
-import { UseGuards } from '@nestjs/common';
+import { UseGuards, UseInterceptors } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
 import { User } from 'src/users/models/user.model';
+import { SentryInterceptor } from 'src/common/interceptors/sentry.interceptor';
 
+@UseInterceptors(SentryInterceptor)
 @Resolver(() => Todo)
 @UseGuards(GqlAuthGuard)
 export class TodosResolver {

@@ -1,3 +1,4 @@
+import { SentryInterceptor } from './../common/interceptors/sentry.interceptor';
 import {
   Resolver,
   Mutation,
@@ -12,7 +13,9 @@ import { LoginInput } from './dto/login.input';
 import { SignupInput } from './dto/signup.input';
 import { User } from 'src/users/models/user.model';
 import { RefreshTokenInput } from './dto/refresh-token.input';
+import { UseInterceptors } from '@nestjs/common';
 
+@UseInterceptors(SentryInterceptor)
 @Resolver(() => Auth)
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}

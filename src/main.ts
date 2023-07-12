@@ -9,9 +9,14 @@ import {
   SwaggerConfig,
 } from './common/configs/config.interface';
 import { PrismaService } from './prisma/prisma.service';
+import * as Sentry from '@sentry/node';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  Sentry.init({
+    dsn: 'https://b7e92d502edf494da78220c9171ae694@o4504627392479232.ingest.sentry.io/4504627402375168',
+  });
 
   // Validation
   app.useGlobalPipes(new ValidationPipe());
